@@ -37,18 +37,18 @@ class Focal():
     self.convolver = Convolution()
     self.MIN_IMG_WIDTH = 256
 
-  def apply(self, image, spikes_per_unit=0.3):
+  def apply(self, image, spikes_per_unit=0.3, overlapcorr=true):
     '''Wrapper function to convert an image into a FoCal representation
         :param image: The image to convert
         :param spikes_per_unit: How many spikes to return, specified in per-unit
                                 (i.e. multiply by 100 to get percentage)
     '''
     spike_images = self.filter_image(image)
-    focal_spikes = self.focal(spike_images, spikes_per_unit=spikes_per_unit)
+    focal_spikes = self.focal(spike_images, spikes_per_unit=spikes_per_unit, overlapcorr)
     return focal_spikes
     
 
-  def focal(self, spike_images, spikes_per_unit=0.3):
+  def focal(self, spike_images, spikes_per_unit=0.3, overlapcorr=true):
     '''Filter Overlap Correction ALgorithm, simulates the foveal pit
         region of the human retina.
         Created by Basabdatta Sen Bhattacharya.
@@ -122,19 +122,20 @@ class Focal():
         # append max spike info to return list
         ordered_spikes.append([local_idx, max_val, cell_type])
         
-        # correct surrounding pixels for overlapping kernel influence
-        for overlap_cell_type in range(len(spike_images)):
-            # get equivalent coordinates for each layer
-            overlap_idx = self.local_coords_to_global_idx(single_coords, 
-                                                         overlap_cell_type, 
-                                                         img_shape, big_shape)
-            
-            is_max_val_layer = overlap_cell_type == cell_type 
-            # c_i = c_i - c_{max}<K_i, K_{max}>
-            self.adjust_with_correlation(big_image,
-                                         self.correlations[cell_type][overlap_cell_type], 
-                                         overlap_idx, max_val, 
-                                         is_max_val_layer=is_max_val_layer)
+        if overlapcorr:
+          # correct surrounding pixels for overlapping kernel influence
+          for overlap_cell_type in range(len(spike_images)):
+              # get equivalent coordinates for each layer
+              overlap_idx = self.local_coords_to_global_idx(single_coords, 
+                                                           overlap_cell_type, 
+                                                           img_shape, big_shape)
+
+              is_max_val_layer = overlap_cell_type == cell_type 
+              # c_i = c_i - c_{max}<K_i, K_{max}>
+              self.adjust_with_correlation(big_image,
+                                           self.correlations[cell_type][overlap_cell_type], 
+                                           overlap_idx, max_val, 
+                                           is_max_val_layer=is_max_val_layer)
 
     
     return ordered_spikes
