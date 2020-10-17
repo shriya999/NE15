@@ -44,7 +44,6 @@ class DifferenceOfGaussians():
        :param cell_type: Index for the cell type in a layer [0 -> 3]
        :returns: Separable kernels (two 1D kernel pairs are needed) and 
                  2D kernel
-
     '''
     is_off_centre, width, sigma, sigma_mult = self.get_params(cell_type)
     
@@ -169,6 +168,3 @@ class DifferenceOfGaussians():
       sigma_mult = 4.8
 
     return off_centre, width, sigma, sigma_mult
-
-
-

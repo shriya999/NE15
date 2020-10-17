@@ -21,8 +21,8 @@ class Convolution():
     width  = img.shape[1]
     height = img.shape[0]
     half_k_width = int(numpy.floor(horz_k.size/2))
-    half_img_width  = int(numpy.floor(width/2))
-    half_img_height = int(numpy.floor(height/2))
+    half_img_width  = int(width/2)
+    half_img_height = int(height/2)
 
     tmp = numpy.zeros_like(img, dtype=numpy.float32)
 
@@ -41,7 +41,7 @@ class Convolution():
             k_sum = 0.
             k = 0
 
-            for i in range(-half_k_width, half_k_width + 1):
+            for i in range(-half_k_width, half_k_width):
                 img_idx = x + i
                 if img_idx >= 0 and img_idx < img.shape[1]:
                     k_sum += img[y,img_idx]*horz_k[k]
@@ -60,7 +60,7 @@ class Convolution():
 
         k_sum = 0.
         k = 0
-        for i in range(-half_k_width, half_k_width + 1):
+        for i in range(-half_k_width, half_k_width):
           img_idx = y + i
           if img_idx >= 0 and img_idx < img.shape[0]:
             k_sum += tmp[img_idx, x]*vert_k[k]

@@ -2,7 +2,6 @@
 
 import numpy
 from scipy.signal import sepfir2d, convolve2d
-from scipy.misc import imresize
 import matplotlib.image as mpimg
 from matplotlib import cm
 import matplotlib.animation as animation
@@ -12,6 +11,7 @@ import pickle
 from os import listdir
 from os.path import isfile, join
 import sys
+
 
 from dog import DifferenceOfGaussians
 from convolution import Convolution
@@ -91,7 +91,7 @@ class Focal():
         big_image[row:row+height, col:col+width] = tmp_img
 
     # Main FoCal loop
-    for count in xrange(max_cycles):
+    for count in range(max_cycles):
         
         # print out completion percentage
         percent = (count*100.)/float(total_spikes-1)
@@ -132,8 +132,7 @@ class Focal():
             is_max_val_layer = overlap_cell_type == cell_type 
             # c_i = c_i - c_{max}<K_i, K_{max}>
             self.adjust_with_correlation(big_image,
-                                         self.correlations[cell_type]\
-                                                          [overlap_cell_type], 
+                                         self.correlations[cell_type][overlap_cell_type], 
                                          overlap_idx, max_val, 
                                          is_max_val_layer=is_max_val_layer)
 
@@ -184,14 +183,14 @@ class Focal():
     
     img_height, img_width = img.shape
     correlation_width = correlation.shape[0]
-    half_correlation_width = correlation_width/2
-    half_img_width = img_width/2
-    half_img_height = img_height/2
+    half_correlation_width = int(correlation_width/2)
+    half_img_width = int(img_width/2)
+    half_img_height = int(img_height/2)
 
     # Get max value's coordinates
     row, col = idx2coord(max_idx, img_width)
-    row_idx = row/half_img_height
-    col_idx = col/half_img_width
+    row_idx = int(row/half_img_height)
+    col_idx = int(col/half_img_width)
     
     # Calculate the zone to affect with the correlation
     up_lim = (row_idx)*half_img_height
@@ -216,8 +215,7 @@ class Focal():
     max_knl_col = half_correlation_width + max_img_col_diff
 
     # c_i = c_i - c_{max}<K_i, K_{max}>
-    img[min_img_row:max_img_row, min_img_col:max_img_col] -= \
-    max_val*correlation[min_knl_row:max_knl_row, min_knl_col:max_knl_col]
+    img[min_img_row:max_img_row, min_img_col:max_img_col] -= max_val*correlation[min_knl_row:max_knl_row, min_knl_col:max_knl_col]
         
     # mark any weird pixels as -inf so they don't matter in the search
     inf_indices = numpy.where(img[min_img_row:max_img_row, min_img_col:max_img_col] == numpy.inf)
@@ -244,8 +242,8 @@ class Focal():
                                                       [ 2 | 3 ]
                                                       ---------
     '''
-    row_add = cell_type/2
-    col_add = cell_type%2
+    row_add = int(cell_type/2)
+    col_add = int(cell_type%2)
     global_coords = (coords[0] + row_add*local_img_shape[0], 
                      coords[1] + col_add*local_img_shape[1])
     global_idx = global_coords[0]*global_img_shape[1] + global_coords[1]
@@ -260,8 +258,8 @@ class Focal():
                                                       [ 2 | 3 ]
                                                       ---------
     '''
-    row_count = coords[0]/single_shape[0]
-    col_count = coords[1]/single_shape[1]
+    row_count = int(coords[0]/single_shape[0])
+    col_count = int(coords[1]/single_shape[1])
     new_row = coords[0] - single_shape[0]*row_count
     new_col = coords[1] - single_shape[1]*col_count
     
@@ -270,9 +268,8 @@ class Focal():
 
   def cell_type_from_global_coords(self, coords, single_shape):
     '''Utility to compute which layer does a coordinate belong to'''
-    row_type = coords[0]/single_shape[0]
-    col_type = coords[1]/single_shape[1]
+    row_type = int(coords[0]/single_shape[0])
+    col_type = int(coords[1]/single_shape[1])
     cell_type = row_type*2 + col_type
     
     return cell_type
-

@@ -1,7 +1,6 @@
 from convolution import *
 from correlation import *
 from dog import *
-
 import pylab as plt
 
 idx_to_name = ["midget_off", "midget_on", "parasol_off", "parasol_on"]
