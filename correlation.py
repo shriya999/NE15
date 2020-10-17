@@ -37,6 +37,11 @@ class Correlation():
     
     filename = "correlation-cache.p"
     
+    if isfile(filename):
+      correlations = pickle.load( open( filename, "rb" ) )
+      print("Loaded correlations from file")
+      return correlations
+    
     correlations = {}
     
     num_kernels = len(self.full_kernels.keys())
