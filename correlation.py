@@ -34,7 +34,9 @@ class Correlation():
     mode = "full" #same, full, valid
     seed = self.kernels_to_string(self.full_kernels)
     seed += mode
-   
+    
+    filename = "correlation-cache.p"
+    
     correlations = {}
     
     num_kernels = len(self.full_kernels.keys())
