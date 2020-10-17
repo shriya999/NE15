@@ -37,7 +37,7 @@ class Focal():
     self.convolver = Convolution()
     self.MIN_IMG_WIDTH = 256
 
-  def apply(self, image, spikes_per_unit=0.3, overlapcorr=true):
+  def apply(self, image, spikes_per_unit=0.3, overlapcorr=True):
     '''Wrapper function to convert an image into a FoCal representation
         :param image: The image to convert
         :param spikes_per_unit: How many spikes to return, specified in per-unit
@@ -48,7 +48,7 @@ class Focal():
     return focal_spikes
     
 
-  def focal(self, spike_images, spikes_per_unit=0.3, overlapcorr=true):
+  def focal(self, spike_images, spikes_per_unit=0.3, overlapcorr=True):
     '''Filter Overlap Correction ALgorithm, simulates the foveal pit
         region of the human retina.
         Created by Basabdatta Sen Bhattacharya.
