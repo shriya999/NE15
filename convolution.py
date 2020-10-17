@@ -20,9 +20,9 @@ class Convolution():
     '''
     width  = img.shape[1]
     height = img.shape[0]
-    half_k_width = np.floor(horz_k.size/2)
-    half_img_width  = np.floor(width/2)
-    half_img_height = np.floor(height/2)
+    half_k_width = numpy.floor(horz_k.size/2)
+    half_img_width  = numpy.floor(width/2)
+    half_img_height = numpy.floor(height/2)
 
     tmp = numpy.zeros_like(img, dtype=numpy.float32)
 
