@@ -12,7 +12,6 @@ import pickle
 from os import listdir
 from os.path import isfile, join
 import sys
-from hashlib import md5
 
 from dog import DifferenceOfGaussians
 from convolution import Convolution
