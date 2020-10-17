@@ -44,7 +44,7 @@ class Focal():
                                 (i.e. multiply by 100 to get percentage)
     '''
     spike_images = self.filter_image(image)
-    focal_spikes = self.focal(spike_images, spikes_per_unit=spikes_per_unit, overlapcorr)
+    focal_spikes = self.focal(spike_images, spikes_per_unit=spikes_per_unit, overlapcorr=overlapcorr)
     return focal_spikes
     
 
