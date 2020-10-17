@@ -4,7 +4,7 @@ import pickle
 from os import listdir
 from os.path import isfile, join
 import sys
-import md5
+from hashlib import md5
 
 class Correlation():
   '''
