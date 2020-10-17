@@ -1,5 +1,4 @@
 import numpy
-import math
 from scipy.signal import sepfir2d
 
 class Convolution():
@@ -21,9 +20,9 @@ class Convolution():
     '''
     width  = img.shape[1]
     height = img.shape[0]
-    half_k_width = math.floor(horz_k.size/2)
-    half_img_width  = math.floor(width/2)
-    half_img_height = math.floor(height/2)
+    half_k_width = int(numpy.floor(horz_k.size/2))
+    half_img_width  = int(numpy.floor(width/2))
+    half_img_height = int(numpy.floor(height/2))
 
     tmp = numpy.zeros_like(img, dtype=numpy.float32)
 
