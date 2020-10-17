@@ -37,11 +37,11 @@ def spike_trains_to_images_g(spike_trains, base_img, num_kernels=4):
         coords = idx2coord(adjusted_idx, base_img.shape[1])
         imgs[cell_type][coords] = val
         if val == numpy.nan:
-            print "spike is nan"
+            print("spike is nan")
         if val == numpy.inf:
-            print "spike is inf"
+            print("spike is inf")
         if val == -numpy.inf:
-            print "spike is -inf"
+            print("spike is -inf")
         
     return imgs
 
