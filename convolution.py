@@ -27,13 +27,13 @@ class Convolution():
     tmp = numpy.zeros_like(img, dtype=numpy.float32)
 
     if mode == "full":
-      horizontal_range = xrange(width) 
-      vertical_range   = xrange(height)
+      horizontal_range = range(width) 
+      vertical_range   = range(height)
     else:
-      horizontal_range = xrange(half_k_width, width  - half_k_width + 1)
-      vertical_range   = xrange(half_k_width, height - half_k_width + 1)
+      horizontal_range = range(half_k_width, width  - half_k_width + 1)
+      vertical_range   = range(half_k_width, height - half_k_width + 1)
 
-    for y in xrange(height):
+    for y in range(height):
         for x in horizontal_range:
             if (x - half_img_width)%col_keep != 0:
                 continue
@@ -41,7 +41,7 @@ class Convolution():
             k_sum = 0.
             k = 0
 
-            for i in xrange(-half_k_width, half_k_width + 1):
+            for i in range(-half_k_width, half_k_width + 1):
                 img_idx = x + i
                 if img_idx >= 0 and img_idx < img.shape[1]:
                     k_sum += img[y,img_idx]*horz_k[k]
@@ -60,7 +60,7 @@ class Convolution():
 
         k_sum = 0.
         k = 0
-        for i in xrange(-half_k_width, half_k_width + 1):
+        for i in range(-half_k_width, half_k_width + 1):
           img_idx = y + i
           if img_idx >= 0 and img_idx < img.shape[0]:
             k_sum += tmp[img_idx, x]*vert_k[k]
