@@ -18,7 +18,7 @@ class DifferenceOfGaussians():
     '''We simulate four layers of Ganglion cells, so we create their
        kernels here
     '''
-    self.max_num_kernels = 3
+    self.max_num_kernels = 4
     self.kernels = None
     self.full_kernels = None
     self.kernels, self.full_kernels = self.create_all_kernels()
